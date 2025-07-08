@@ -1,0 +1,52 @@
+semantic_models:
+- name: customers
+  description: A customer dimension table.
+  model: ref('dim_customers')
+  defaults:
+    agg_time_dimension: created_at
+  entities:
+  - name: customer
+    type: primary
+    expr: customer_id
+  dimensions:
+  - name: first_name
+    type: categorical
+  - name: last_name
+    type: categorical
+  - name: email
+    type: categorical
+  - name: phone_number
+    type: categorical
+  - name: address
+    type: categorical
+  - name: city
+    type: categorical
+  - name: state
+    type: categorical
+  - name: country
+    type: categorical
+  - name: postal_code
+    type: categorical
+  - name: created_at
+    type: time
+    type_params:
+      time_granularity: day
+  - name: updated_at
+    type: time
+    type_params:
+      time_granularity: day
+  measures:
+  - name: total_orders
+    description: The total number of orders placed by the customer.
+    agg: count
+    create_metric: true
+    expr: order_id
+  - name: total_spent
+    description: The total amount spent by the customer.
+    agg: sum
+    create_metric: true
+    expr: order_total
+  - name: count_customer
+    agg: count
+    create_metric: true
+    expr: customer_id
