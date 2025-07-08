@@ -1,0 +1,33 @@
+semantic_models:
+  - name: customers
+    model: ref('dim_customers')
+
+    defaults:
+      agg_time_dimension: created_at
+
+    entities:
+      - name: customer_id
+        type: primary
+        expr: customer_id
+
+    dimensions:
+      - name: created_at
+        type: time
+        type_params:
+          time_granularity: day
+
+      - name: country
+        type: categorical
+
+    measures:
+      - name: total_orders
+        expr: order_count
+        agg: sum
+
+      - name: total_revenue
+        expr: revenue
+        agg: sum
+
+      - name: avg_order_value
+        expr: revenue / order_count
+        agg: average
